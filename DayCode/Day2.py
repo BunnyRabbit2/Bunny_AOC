@@ -23,6 +23,17 @@ def calculateWrapping(l,w,h):
 
     return surfaceArea + smallestSide
 
+def calculateRibbon(l,w,h):
+    per1 = l*2 + w*2
+    per2 = l*2 + h*2
+    per3 = w*2 + h*2
+
+    ribbon = min(per1,per2,per3)
+    bow = l*w*h
+
+    return ribbon+bow
+
+
 def getLwhFromString(stringLwh):
     values = stringLwh.split('x')
     l = int(values[0])
@@ -32,13 +43,15 @@ def getLwhFromString(stringLwh):
     return (l,w,h)
 
 def calculateTotalSF(inputs):
-    totalSF = 0
+    totalWrappingSF = 0
+    totalRibbonF = 0
 
     for s in inputs:
         values = getLwhFromString(s)
-        totalSF += calculateWrapping(values[0],values[1],values[2])
+        totalWrappingSF += calculateWrapping(values[0],values[1],values[2])
+        totalRibbonF += calculateRibbon(values[0],values[1],values[2])
 
-    return (totalSF,0)
+    return (totalWrappingSF,totalRibbonF)
 
 def solvePuzzle1(fileLocation):
     inputs = loadInputs(fileLocation)
@@ -48,6 +61,8 @@ def solvePuzzle1(fileLocation):
     print "Day 2 Puzzle 1 Solution - " + str(output[0])
 
 def solvePuzzle2(fileLocation):
-    output = (0,0)
+    inputs = loadInputs(fileLocation)
+
+    output = calculateTotalSF(inputs)
 
     print "Day 2 Puzzle 2 Solution - " + str(output[1])
