@@ -12,20 +12,30 @@ def loadInputs(fileLocation):
     else:
         print("Day 1 input file does not exist")
 
-def solvePuzzle1(fileLocation):
-    inputs = loadInputs(fileLocation)
-
+def processInputs(inputs):
     currentFloor = 0
+    enteredBasement = False
+    firstEnteredBasement = 1
 
     for c in inputs:
         if c == '(':
             currentFloor += 1
         elif c == ')':
             currentFloor -= 1
+        if not enteredBasement:
+            if currentFloor < 0:
+                enteredBasement = True
+            else:
+                firstEnteredBasement += 1
 
-    print "Day 1 Puzle 1 Solution - " + str(currentFloor)
+    return (currentFloor,firstEnteredBasement)
+
+def solvePuzzle1(fileLocation):
+    output = processInputs(loadInputs(fileLocation))    
+
+    print "Day 1 Puzzle 1 Solution - " + str(output[0])
 
 def solvePuzzle2(fileLocation):
-    
+    output = processInputs(loadInputs(fileLocation)) 
 
-    print "Day 1 Puzle 2 Solution - " + " "
+    print "Day 1 Puzzle 2 Solution - " + str(output[1])
