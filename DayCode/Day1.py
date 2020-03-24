@@ -1,5 +1,10 @@
 import os
 
+def solve():
+    fileLoc = "inputs/day1.txt"
+    solvePuzzle1(fileLoc)
+    solvePuzzle2(fileLoc)
+
 def loadInputs(fileLocation):
     if os.path.exists(fileLocation):
         file = open(fileLocation)
