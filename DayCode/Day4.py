@@ -12,14 +12,13 @@ def loadInputs(fileLocation):
     else:
         print("Day 4 input file does not exist")
 
-def findAdventCoin(secret):
-    checkString = "00000"
+def findAdventCoin(secret, checkString):
     foundCoin = False
     currrentNumber = 0
 
     while not foundCoin:
         testHash = md5.new(secret + str(currrentNumber)).hexdigest()
-        if testHash[0:5] == checkString:
+        if testHash[0:len(checkString)] == checkString:
             foundCoin = True
         else:
             currrentNumber += 1
@@ -29,13 +28,13 @@ def findAdventCoin(secret):
 def solvePuzzle1(fileLocation):
     input = loadInputs(fileLocation)
 
-    output = findAdventCoin(input)
+    output = findAdventCoin(input, "00000")
 
     print "Day 4 Puzzle 1 Solution - " + str(output)
 
 def solvePuzzle2(fileLocation):
-    # inputs = loadInputs(fileLocation)
+    input = loadInputs(fileLocation)
 
-    output = (0,0)
+    output = findAdventCoin(input, "000000")
 
-    print "Day 4 Puzzle 2 Solution - " + str(output[1])
+    print "Day 4 Puzzle 2 Solution - " + str(output)
