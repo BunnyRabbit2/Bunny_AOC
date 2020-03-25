@@ -37,6 +37,31 @@ def checkStringIsNice(testString):
     else:
         return False
 
+def checkStringIsNiceAlt(testString):
+    hasRepeatPair = False
+    hasTripleSet = False
+
+    for i in range(len(testString)):
+        testPair = testString[i:i+2]
+        if len(testPair) > 1:
+            newTestString = testString
+            newTestString = newTestString[:i] + "--" + newTestString[i + 2:]
+
+            for j in range(len(testString)):
+                newTestPair = newTestString[j:j+2]
+                if newTestPair == testPair:
+                    hasRepeatPair = True
+            
+        checkTriple = testString[i:i+3]
+        if len(checkTriple) > 2:
+            if checkTriple[0] == checkTriple[2] and checkTriple[0] != checkTriple[1]:
+                hasTripleSet = True
+
+    if hasTripleSet and hasRepeatPair:
+        return True
+    else:
+        return False
+
 def solvePuzzle1(fileLocation):
     inputs = loadInputs(fileLocation)
     niceStrings = 0
@@ -48,8 +73,11 @@ def solvePuzzle1(fileLocation):
     print "Day 5 Puzzle 1 Solution - " + str(niceStrings)
 
 def solvePuzzle2(fileLocation):
-    # inputs = loadInputs(fileLocation)
+    inputs = loadInputs(fileLocation)
+    niceStrings = 0
 
-    output = (0,0)
+    for s in inputs:
+        if checkStringIsNiceAlt(s):
+            niceStrings += 1
 
-    print "Day 5 Puzzle 2 Solution - " + str(output[1])
+    print "Day 5 Puzzle 2 Solution - " + str(niceStrings)
