@@ -1,5 +1,5 @@
-from DayCode import Day2
+from DayCode import Day3
 
 def solvePuzzles():
     # Day1.solve()
-    Day2.solve()
+    Day3.solve()
