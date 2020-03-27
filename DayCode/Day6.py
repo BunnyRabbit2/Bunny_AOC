@@ -1,6 +1,7 @@
 import os
 from PIL import Image
 import numpy as np
+from re import findall
 
 def solve():
     fileLoc = "inputs/day6.txt"
@@ -10,7 +11,7 @@ def solve():
 def loadInputs(fileLocation):
     if os.path.exists(fileLocation):
         file = open(fileLocation)
-        return file.readlines()
+        return file.read()
     else:
         print("Day 6 input file does not exist")
 
@@ -45,80 +46,70 @@ def createCommands(commandStrings):
     
     return commands
 
-def createLightField():
-    size = 1000
-    field = []
-
-    for x in range(size):
-        newCol = []
-        for y in range(size):
-            newCol.append(False)
-        field.append(newCol)
-
-    return field
-
-def runCommand(command, field):
-    for x in range(command[1][0],command[2][0]):
-        for y in range(command[1][1],command[2][1]):
-            if command[0] == "on":
-                field[x][y] = True
-            elif command[0] == "off":
-                field[x][y] = False
-            elif command[0] == "toggle":
-                field[x][y] = not field[x][y]
-
-    # writeLightFile(field)
-    Image.fromarray(np.array(field)).save("lights.png")
-
-    return field
-
 def countLightsOn(field):
     size = len(field)
     lightsOn = 0
 
     for x in range(size):
         for y in range(size):
-            if field[x][y]:
+            if field[x][y] == 1:
                 lightsOn += 1
 
     return lightsOn
 
-def writeLightFile(field):
-    on = "0"
-    off = " "
+def countBrightness(field):
     size = len(field)
-    lines = []
+    totalB = 0
 
-    for y in range(size):
-        line = ""
-        for x in range(size):
-            if field[x][y]:
-                line += on
-            else:
-                line += off
-        lines.append(line)
+    for x in range(size):
+        for y in range(size):
+            totalB += field[x][y]
 
-    with open('testlights.txt', 'w') as f:
-        for l in lines:
-            print >> f, l
-                
+    return totalB
 
 def solvePuzzle1(fileLocation):
     inputs = loadInputs(fileLocation)
 
-    commands = createCommands(inputs)
-    lights = createLightField()
+    commands = findall("(toggle|turn on|turn off)\s(\d*),(\d*)\sthrough\s(\d*),(\d*)", inputs)
+    lights = [[0 for i in range(1000)] for j in range(1000)]
 
-    for c in commands:
-        lights = runCommand(c,lights)
+    for command, x1, y1, x2, y2 in commands:
+        coords = [(x,y) for x in range(int(x1), int(x2) + 1) for y in range(int(y1), int(y2) + 1)]
+        for x,y in coords:
+            if command == "turn on":
+                lights[x][y] = 1
+            elif command == "turn off":
+                lights[x][y] = 0
+            elif command == "toggle":
+                if lights[x][y] == 1:
+                    lights[x][y] = 0
+                else:
+                    lights[x][y] = 1
 
     output = countLightsOn(lights)
+
+    Image.fromarray(np.array(lights)).save("lights.png")
 
     print "Day 6 Puzzle 1 Solution - " + str(output)
 
 def solvePuzzle2(fileLocation):
-    # inputs = loadInputs(fileLocation)
+    inputs = loadInputs(fileLocation)
 
-    output = (0,0)
+    commands = findall("(toggle|turn on|turn off)\s(\d*),(\d*)\sthrough\s(\d*),(\d*)", inputs)
+    lights = [[0 for i in range(1000)] for j in range(1000)]
 
-    print "Day 6 Puzzle 2 Solution - " + str(output[1])
+    for command, x1, y1, x2, y2 in commands:
+        coords = [(x,y) for x in range(int(x1), int(x2) + 1) for y in range(int(y1), int(y2) + 1)]
+        for x,y in coords:
+            if command == "turn on":
+                lights[x][y] += 1
+            elif command == "turn off":
+                lights[x][y] -= 1
+                if lights[x][y] < 0:
+                    lights[x][y] = 0
+            elif command == "toggle":
+                lights[x][y] += 2
+
+    output = countBrightness(lights)
+
+    print "Day 6 Puzzle 2 Solution - " + str(output)
