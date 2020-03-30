@@ -28,6 +28,20 @@ def getCount(json):
     if type(json) is tuple:
         return sum(map(getCount,json))
 
+def getCountNoRed(json):
+    if type(json) in [str,unicode]:
+        return 0
+    if type(json) in [int,float]:
+        return json
+    if type(json) is list:
+        return sum(map(getCountNoRed,json))
+    if type(json) is dict:
+        if "red" in json.values():
+            return 0
+        return sum(map(getCountNoRed,json.iteritems()))
+    if type(json) is tuple:
+        return sum(map(getCountNoRed,json))
+
 def solvePuzzle1(fileLocation):
     jsonFile = loadInputs(fileLocation)
 
@@ -36,8 +50,8 @@ def solvePuzzle1(fileLocation):
     print "Day 12 Puzzle 1 Solution - " + str(output)
 
 def solvePuzzle2(fileLocation):
-    # inputs = loadInputs(fileLocation)
+    jsonFile = loadInputs(fileLocation)
 
-    output = (0,0)
+    output = getCountNoRed(jsonFile)
 
-    print "Day 12 Puzzle 2 Solution - " + str(output[1])
+    print "Day 12 Puzzle 2 Solution - " + str(output)
