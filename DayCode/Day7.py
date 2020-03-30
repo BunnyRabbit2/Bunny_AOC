@@ -26,7 +26,7 @@ def createGateList(inputs):
         inWire = "NIL"
         inWire2 = "NIL"
         gateT = "T0"
-        gateV = -1
+        gateV = None
 
         output = c.split("->")[1].strip()
         command = c.split("->")[0].split()
@@ -43,7 +43,7 @@ def createGateList(inputs):
             gateT = command[1]
         elif command[0] == "NOT":
             inWire = command[1]
-            gateT = command[1]
+            gateT = command[0]
         elif command[1] == "LSHIFT":
             inWire = command[0]
             gateT = command[1]
@@ -58,7 +58,7 @@ def createGateList(inputs):
             "value":gateV,
             "inWire1":inWire,
             "inWire2":inWire2,
-            "outSignal":-1,
+            "outSignal":None,
         }
 
     return gateList
@@ -70,52 +70,66 @@ def calculateIn(gate, gateList):
         gateO["outSignal"] = int(gateO["inWire1"])
         return
 
-    if gateList[gateO["inWire1"]]["outSignal"] == -1:
+    if gateList[gateO["inWire1"]]["outSignal"] == None:
         calculateIn(gateO["inWire1"], gateList)
     if gateO["inWire2"] != "NIL":
-        if gateList[gateO["inWire2"]]["outSignal"] == -1:
+        if gateList[gateO["inWire2"]]["outSignal"] == None:
             calculateIn(gateO["inWire2"], gateList)
 
     out = -1
+    iw2o = -1
+
+    iw1o = gateList[gateO["inWire1"]]["outSignal"]
+    if gateO["inWire2"] != "NIL":
+        iw2o = gateList[gateO["inWire2"]]["outSignal"]
 
     if gateO["type"] == "DIODE":
-        out = gateList[gateO["inWire1"]]["outSignal"]
+        out = iw1o
     elif gateO["type"] == "AND":
-        out = gateList[gateO["inWire1"]]["outSignal"] & gateList[gateO["inWire2"]]["outSignal"]
+        out = iw1o & iw2o
     elif gateO["type"] == "OR":
-        out = gateList[gateO["inWire1"]]["outSignal"] | gateList[gateO["inWire2"]]["outSignal"]
+        out = iw1o | iw2o
     elif gateO["type"] == "NOT":
-        out = ~gateList[gateO["inWire1"]]["outSignal"]
+        out = ~iw1o
     elif gateO["type"] == "LSHIFT":
-        out = gateList[gateO["inWire1"]]["outSignal"] << gateO["value"]
+        out = iw1o << gateO["value"]
     elif gateO["type"] == "RSHIFT":
-        out = gateList[gateO["inWire1"]]["outSignal"] >> gateO["value"]
+        out = iw1o >> gateO["value"]
 
     gateO["outSignal"] = out
 
 def calculateOut(gate, gateList):
     gateO = gateList[gate]
 
-    if gateList[gateO["inWire1"]]["outSignal"] == -1:
+    if is_int(gateO["inWire1"]):
+        gateO["outSignal"] = int(gateO["inWire1"])
+        return
+
+    if gateList[gateO["inWire1"]]["outSignal"] == None:
         calculateIn(gateO["inWire1"], gateList)
     if gateO["inWire2"] != "NIL":
-        if gateList[gateO["inWire2"]]["outSignal"] == -1:
+        if gateList[gateO["inWire2"]]["outSignal"] == None:
             calculateIn(gateO["inWire2"], gateList)
 
     out = -1
+    iw2o = -1
+
+    iw1o = gateList[gateO["inWire1"]]["outSignal"]
+    if gateO["inWire2"] != "NIL":
+        iw2o = gateList[gateO["inWire2"]]["outSignal"]
 
     if gateO["type"] == "DIODE":
-        out = gateList[gateO["inWire1"]]["outSignal"]
+        out = iw1o
     elif gateO["type"] == "AND":
-        out = gateList[gateO["inWire1"]]["outSignal"] & gateList[gateO["inWire2"]]["outSignal"]
+        out = iw1o & iw2o
     elif gateO["type"] == "OR":
-        out = gateList[gateO["inWire1"]]["outSignal"] | gateList[gateO["inWire2"]]["outSignal"]
+        out = iw1o | iw2o
     elif gateO["type"] == "NOT":
-        out = ~gateList[gateO["inWire1"]]["outSignal"]
+        out = ~iw1o
     elif gateO["type"] == "LSHIFT":
-        out = gateList[gateO["inWire1"]]["outSignal"] << gateO["value"]
+        out = iw1o << gateO["value"]
     elif gateO["type"] == "RSHIFT":
-        out = gateList[gateO["inWire1"]]["outSignal"] >> gateO["value"]
+        out = iw1o >> gateO["value"]
 
     gateO["outSignal"] = out
 
