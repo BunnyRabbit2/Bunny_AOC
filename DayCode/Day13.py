@@ -66,8 +66,18 @@ def solvePuzzle1(fileLocation):
     print "Day 13 Puzzle 1 Solution - " + str(output)
 
 def solvePuzzle2(fileLocation):
-    # inputs = loadInputs(fileLocation)
+    inputs = loadInputs(fileLocation)
 
-    output = (0,0)
+    ruleSet = createSeatingRules(inputs)
 
-    print "Day 13 Puzzle 2 Solution - " + str(output[1])
+    myself = "Myself"
+
+    for p in ruleSet[0]:
+        ruleSet[1].setdefault(myself,{})[p] = (("gain",0))
+        ruleSet[1].setdefault(p,{})[myself] = (("gain",0))
+
+    ruleSet[0].add(myself)
+
+    output = findHappiestTable(ruleSet[0],ruleSet[1])
+
+    print "Day 13 Puzzle 2 Solution - " + str(output)
