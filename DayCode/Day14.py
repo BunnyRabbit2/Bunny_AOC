@@ -54,7 +54,43 @@ def solvePuzzle1(fileLocation):
     print "Day 14 Puzzle 1 Solution - " + str(output)
 
 def solvePuzzle2(fileLocation):
-    # inputs = loadInputs(fileLocation)
+    inputs = loadInputs(fileLocation)
+
+    rs = createReindeerStats(inputs)
+
+    raceTime = 2503
+
+    scores = {}
+    for r in rs:
+        scores[r] = [True,0,0,0] # flying, score, distance, time
+
+    for i in range(raceTime):
+        for r in rs:
+            if scores[r][0]:
+                s = rs[r]["speed"]
+                scores[r][2] += s
+                scores[r][3] += 1
+                if scores[r][3] >= rs[r]["time"]:
+                    scores[r][0] = False
+                    scores[r][3] = 0
+            else:
+                scores[r][3] += 1
+                if scores[r][3] >= rs[r]["rest"]:
+                    scores[r][0] = True
+                    scores[r][3] = 0
+
+        lead = max(scores.iteritems(), key = operator.itemgetter(1))
+
+        leadRs = []
+        ld = lead[1][2]
+        for s in scores:
+            cd = scores[s][2]
+            if ld == cd:
+            # if scores[s][2] = lead[1][2]:
+                leadRs.append(s)
+
+        for r in leadRs:
+            scores[r][1] += 1
 
     output = 0
 
