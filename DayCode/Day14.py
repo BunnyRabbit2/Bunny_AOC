@@ -79,10 +79,14 @@ def solvePuzzle2(fileLocation):
                     scores[r][0] = True
                     scores[r][3] = 0
 
-        lead = max(scores.iteritems(), key = operator.itemgetter(1))
+        lead = scores[next(iter(scores))]
+
+        for s in scores:
+            if scores[s][2] > lead[2]:
+                lead = scores[s]
 
         leadRs = []
-        ld = lead[1][2]
+        ld = lead[2]
         for s in scores:
             cd = scores[s][2]
             if ld == cd:
@@ -92,6 +96,10 @@ def solvePuzzle2(fileLocation):
         for r in leadRs:
             scores[r][1] += 1
 
-    output = 0
+    output = scores[next(iter(scores))]
+
+    for s in scores:
+        if scores[s][1] > output[1]:
+            output = scores[s]
 
     print "Day 14 Puzzle 2 Solution - " + str(output)
