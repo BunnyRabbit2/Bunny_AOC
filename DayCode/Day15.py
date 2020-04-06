@@ -2,7 +2,6 @@ import os
 
 def solve():
     fileLoc = "inputs/day15.txt"
-    testSolution()
     solvePuzzle1(fileLoc)
     solvePuzzle2(fileLoc)
 
@@ -14,21 +13,24 @@ def loadInputs(fileLocation):
         print("Day 15 input file does not exist")
 
 def createIngredients(inputs):
-    ingredients = {}
+    ingredients = []
 
     for l in inputs:
         ing = l.split(": ")[0]
         values = l.split(": ")[1].split(", ")
-        ingredients.setdefault(ing,{})
-
+        vA = []
+        
         for v in values:
-            ingredients[ing][v.split()[0]] = int(v.split()[1])
+            vA.append(int(v.split()[1]))
+
+        ingredients.append(vA)
 
     return ingredients
 
 def solvePuzzle1(fileLocation):
     inputs = loadInputs(fileLocation)
     ings = createIngredients(inputs)
+    t = [[2,0,-2,0,3],[0,5,-3,0,3],[0,0,5,-1,8],[0,-1,0,5,8]]
 
     score = 0
     maxScore = 0
@@ -38,17 +40,14 @@ def solvePuzzle1(fileLocation):
             for k in range(0,100-i-j):
                 h = 100-i-j-k
 
-                cl1,cl2,cl3,cl4 = ings["Sprinkles"]["calories"], ings["Butterscotch"]["calories"], ings["Chocolate"]["calories"], ings["Candy"]["calories"]
-                cp1,cp2,cp3,cp4 = ings["Sprinkles"]["capacity"], ings["Butterscotch"]["capacity"], ings["Chocolate"]["capacity"], ings["Candy"]["capacity"]
-                d1,d2,d3,d4 = ings["Sprinkles"]["durability"], ings["Butterscotch"]["durability"], ings["Chocolate"]["durability"], ings["Candy"]["durability"]
-                f1,f2,f3,f4 = ings["Sprinkles"]["flavor"], ings["Butterscotch"]["flavor"], ings["Chocolate"]["flavor"], ings["Candy"]["flavor"]
-                t1,t2,t3,t4 = ings["Sprinkles"]["texture"], ings["Butterscotch"]["texture"], ings["Chocolate"]["texture"], ings["Candy"]["texture"]
+                if h == 0:
+                    continue
 
-                cal = cl1*i + cl2*j + cl3*k + cl4*h
-                cap = cp1*i + cp2*j + cp3*k + cp4*h
-                dur = d1*i + d1*j + d3*k + d4*h
-                fla = f1*i + f1*j + f3*k + f4*h
-                tex = t1*i + t1*j + t3*k + t4*h
+                cap = max(0, ings[0][0]*i+ings[1][0]*j+ings[2][0]*k+ings[3][0]*h)
+                dur = max(0, ings[0][1]*i+ings[1][1]*j+ings[2][1]*k+ings[3][1]*h)
+                fla = max(0, ings[0][2]*i+ings[1][2]*j+ings[2][2]*k+ings[3][2]*h)
+                tex = max(0, ings[0][3]*i+ings[1][3]*j+ings[2][3]*k+ings[3][3]*h)
+                cal = max(0, ings[0][4]*i+ings[1][4]*j+ings[2][4]*k+ings[3][4]*h)
 
                 score = cap * dur * fla * tex
 
@@ -58,34 +57,32 @@ def solvePuzzle1(fileLocation):
     print "Day 15 Puzzle 1 Solution - " + '{:,}'.format(maxScore)
 
 def solvePuzzle2(fileLocation):
-    # inputs = loadInputs(fileLocation)
-
-    output = 0
-
-    print "Day 15 Puzzle 2 Solution - " + str(output)
-
-def testSolution():
+    inputs = loadInputs(fileLocation)
+    ings = createIngredients(inputs)
     t = [[2,0,-2,0,3],[0,5,-3,0,3],[0,0,5,-1,8],[0,-1,0,5,8]]
 
-    score = 0 
-    maxS = 0
+    score = 0
+    maxScore = 0
+
     for i in range(0,100):
         for j in range(0,100-i):
             for k in range(0,100-i-j):
                 h = 100-i-j-k
-                a = t[0][0]*i+t[1][0]*j+t[2][0]*k+t[3][0]*h
-                b = t[0][1]*i+t[1][1]*j+t[2][1]*k+t[3][1]*h
-                c = t[0][2]*i+t[1][2]*j+t[2][2]*k+t[3][2]*h
-                d = t[0][3]*i+t[1][3]*j+t[2][3]*k+t[3][3]*h
-                e = t[0][4]*i+t[1][4]*j+t[2][4]*k+t[3][4]*h
 
-                #extra condition for part b
-                if(not(e == 500)):
+                if h == 0:
                     continue
-                if (a <= 0 or b <= 0 or c <= 0 or d <= 0):
-                    score = 0
+
+                cap = max(0, ings[0][0]*i+ings[1][0]*j+ings[2][0]*k+ings[3][0]*h)
+                dur = max(0, ings[0][1]*i+ings[1][1]*j+ings[2][1]*k+ings[3][1]*h)
+                fla = max(0, ings[0][2]*i+ings[1][2]*j+ings[2][2]*k+ings[3][2]*h)
+                tex = max(0, ings[0][3]*i+ings[1][3]*j+ings[2][3]*k+ings[3][3]*h)
+                cal = max(0, ings[0][4]*i+ings[1][4]*j+ings[2][4]*k+ings[3][4]*h)
+
+                score = cap * dur * fla * tex
+
+                if not cal == 500:
                     continue
-                score = a*b*c*d
-                if (score > maxS):
-                    maxS = score
-    print maxS
+
+                maxScore = max(score,maxScore)
+
+    print "Day 15 Puzzle 2 Solution - " + '{:,}'.format(maxScore)
