@@ -27,7 +27,7 @@ def createGrid(inputs, width):
 
     return grid
 
-def stepLightGrid(grid):
+def stepLightGrid(grid, cornersOn = False):
     size = len(grid)
     newGrid = []
     for x in range(size):
@@ -64,6 +64,12 @@ def stepLightGrid(grid):
                 else:
                     newGrid[x][y] = '.'
 
+    if cornersOn:
+        newGrid[0][0] = '#'
+        newGrid[0][size-1] = '#'
+        newGrid[size-1][0] = '#'
+        newGrid[size-1][size-1] = '#'
+
     return newGrid
 
 def countLightsOn(grid):
@@ -78,6 +84,19 @@ def countLightsOn(grid):
 
     return lightsOn
 
+def printGrid(grid, fileSuf = ""):
+    size = len(grid)
+
+    lines = []
+    for y in range(size):
+        line = ""
+        for x in range(size):
+            line += grid[x][y]
+        line += '\n'
+        lines.append(line)
+    file = open("output/d18/output" + fileSuf + ".txt", "w+")
+    file.writelines(lines)        
+
 def solvePuzzle1(fileLocation):
     inputs = loadInputs(fileLocation)
     grid = createGrid(inputs,100)
@@ -90,8 +109,19 @@ def solvePuzzle1(fileLocation):
     print "Day 18 Puzzle 1 Solution - " + str(output)
 
 def solvePuzzle2(fileLocation):
-    # inputs = loadInputs(fileLocation)
+    inputs = loadInputs(fileLocation)
+    grid = createGrid(inputs,100)
 
-    output = 0
+    size = len(grid)
 
+    grid[0][0] = '#'
+    grid[0][size-1] = '#'
+    grid[size-1][0] = '#'
+    grid[size-1][size-1] = '#'
+
+    for i in range(100):
+        grid = stepLightGrid(grid, True)
+        # printGrid(grid, str(i))
+
+    output = countLightsOn(grid)
     print "Day 18 Puzzle 2 Solution - " + str(output)
