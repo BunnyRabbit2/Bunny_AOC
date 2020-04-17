@@ -1,5 +1,7 @@
 {
     "files.exclude": {
-        "*/*.pyc": true
-    }
+        "*/*.pyc": true,
+        "electron_aoc":true
+    },
+    "git.ignoreLimitWarning": true
 }
