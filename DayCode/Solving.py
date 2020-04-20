@@ -1,4 +1,4 @@
-from DayCode import Day21
+from DayCode import Day22
 
 def solvePuzzles():
-    Day21.solve()
+    Day22.solve()
