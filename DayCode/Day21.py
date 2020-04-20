@@ -123,8 +123,29 @@ def solvePuzzle1(fileLocation):
     print "Day 21 Puzzle 1 Solution - " + str(output)
 
 def solvePuzzle2(fileLocation):
-    # inputs = loadInputs(fileLocation)
+    inputs = loadInputs(fileLocation)
 
-    output = 0
+    DATA = createGameData(inputs)
+    boss = DATA[0]
+    weapons = DATA[1]
+    armor = DATA[2]
+    rings = DATA[3]
+
+    player = {'hp': 100,'dam': 0,'arm': 0}
+
+    maxCost = 0
+
+    for w in weapons.values():
+        for a in armor.values():
+            for r1, r2 in itertools.combinations(rings.values(),2):
+                player['hp'] = 100
+                boss['hp'] = 104
+                cost = w['cost'] + a['cost'] + r1['cost'] + r2['cost']
+                player['dam'] = w['dam'] + r1['dam'] + r2['dam']
+                player['arm'] = a['arm'] + r1['arm'] + r2['arm']
+                if fight(boss,player) == 'boss':
+                    maxCost = max(cost,maxCost)
+
+    output = maxCost
 
     print "Day 21 Puzzle 2 Solution - " + str(output)
