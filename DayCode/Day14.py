@@ -51,7 +51,7 @@ def solvePuzzle1(fileLocation):
 
     output = max(distances.iteritems(), key = operator.itemgetter(1))
 
-    print "Day 14 Puzzle 1 Solution - " + str(output)
+    print "Day 14 Puzzle 1 Solution - " + str(output[1])
 
 def solvePuzzle2(fileLocation):
     inputs = loadInputs(fileLocation)
@@ -102,4 +102,4 @@ def solvePuzzle2(fileLocation):
         if scores[s][1] > output[1]:
             output = scores[s]
 
-    print "Day 14 Puzzle 2 Solution - " + str(output)
+    print "Day 14 Puzzle 2 Solution - " + str(output[1])
