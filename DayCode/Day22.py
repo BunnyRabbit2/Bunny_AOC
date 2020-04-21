@@ -1,5 +1,8 @@
 import os
 
+p1MinMana = 1000
+finalSpellsUsed = []
+
 def solve():
     fileLoc = "inputs/day22.txt"
     solvePuzzle1(fileLoc)
@@ -8,7 +11,7 @@ def solve():
 def loadInputs(fileLocation):
     if os.path.exists(fileLocation):
         file = open(fileLocation)
-        return file.read()
+        return file.read().split('\n')
     else:
         print("Day 22 input file does not exist")
 
@@ -29,47 +32,94 @@ def createGameData(inputs):
                 magic.setdefault(mS[0],{})
                 magic[mS[0]]['cost'] = int(mS[1])
                 
-                m = inputs[i+mC]
+                firstE = mS[2].split('->')
+                magic[mS[0]][firstE[0]] = int(firstE[1])
+                if len(mS) > 3:
+                    secondE = mS[3].split('->')
+                    magic[mS[0]][secondE[0]] = int(secondE[1])
                 mC += 1
+                m = inputs[i+mC]
 
     return (boss,magic)
 
-def fight(boss,player):
-    roundN = 0
-    fileP = "output/d21/output.txt"
-    os.remove(fileP)
-    file = open(fileP, "a+")
+def fight(bossHP,bossD,playerHP,playerM,playerA,magic,manaUsed=0,spellsUsed="",shield=0,poison=0,recharge=0):
+    for mk in magic.keys():
+        m = magic[mk]
 
-    while boss['hp'] >= 0 and player['hp'] >= 0:
-        playerDam = max(1,player['dam'] - boss['arm'])
-        bossDam = max(1,boss['dam'] - player['arm'])
+        if mk == 'Drain':
+            v = 0
 
-        boss['hp'] -= playerDam
-        if boss['hp'] <= 0:
-            break
+        canCast = False
 
-        player['hp'] -= bossDam
-        if player['hp'] <= 0:
-            break
+        if m['cost'] < playerM:
+            canCast = True
 
-        file.write('Round ' + str(roundN) + ': Boss HP - ' + str(boss['hp']) + ', Player HP - ' + str(player['hp']) + '\n')
-        roundN += 1
+        if shield > 0:
+            playerA = magic['Shield']['ARM']
+            shield -= 1
+        else:
+            playerA = 0
 
-    file.close()
-    if boss['hp'] <= 0:
-        return 'player'
-    if player['hp'] <= 0:
-        return 'boss'
+        if poison > 0:
+            bossHP -= magic['Poison']['DAM']
+            poison -= 1
+        
+        if recharge > 0:
+            playerM += magic['Recharge']['MANA']
+
+        if canCast:
+            spellsUsed += mk + ' -> '
+
+            playerM -= m['cost']
+            manaUsed += m['cost']
+
+            if 'EFFECT' in m:
+                if 'DAM' in m:
+                    poison = m['EFFECT']
+                elif 'ARM' in m:
+                    shield = m['EFFECT']
+                elif 'MANA' in m:
+                    recharge = m['EFFECT']
+            else:
+                if 'DAM' in m:
+                    bossHP -= m['DAM']
+                if 'HEAL' in m:
+                    playerHP += m['HEAL']
+
+        playerHP -= bossD - playerA
+
+        if playerHP <= 0:
+            global finalSpellsUsed
+            spellsUsed = 'FINAL -  PlayerHP: ' + str(playerHP) + ' BossHP: ' + str(bossHP) + ' Spells: ' + spellsUsed
+            finalSpellsUsed.append(spellsUsed)
+            return -1
+        if bossHP <= 0:
+            return manaUsed
+            global p1MinMana
+            if manaUsed < p1MinMana:
+                p1MinMana = manaUsed
+
+        fight(bossHP,bossD,playerHP,playerM,playerA,magic,manaUsed,spellsUsed,shield,poison,recharge)
 
 def solvePuzzle1(fileLocation):
     inputs = loadInputs(fileLocation)
 
     DATA = createGameData(inputs)
     boss = DATA[0]
+    magic = DATA[1]
+    player = {'hp': 50,'mana': 500,'arm':0}
+
+    fight(boss['hp'],boss['dam'],player['hp'],player['mana'],player['arm'],magic)
     
-    output = 0
+    output = p1MinMana
 
     print "Day 22 Puzzle 1 Solution - " + str(output)
+    global finalSpellsUsed
+    
+    file = open("output/d22/output.txt", "w+")
+    for r in finalSpellsUsed:
+        file.write(r + '\n')
+    file.close()
 
 def solvePuzzle2(fileLocation):
     inputs = loadInputs(fileLocation)
