@@ -1,7 +1,15 @@
 import os
+from sys import maxsize
 
-p1MinMana = 1000
+p1MinMana = maxsize
 finalSpellsUsed = []
+magicShort = {
+    "Magic_Missile":"MM",
+    "Drain":"DD",
+    "Recharge":"RE",
+    "Shield":"SH",
+    "Poison":"PP"
+}
 
 def solve():
     fileLoc = "inputs/day22.txt"
@@ -68,7 +76,8 @@ def fight(bossHP,bossD,playerHP,playerM,playerA,magic,manaUsed=0,spellsUsed="",s
             playerM += magic['Recharge']['MANA']
 
         if canCast:
-            spellsUsed += mk + ' -> '
+            global magicShort
+            spellsUsed += magicShort[mk] + ' -> '
 
             playerM -= m['cost']
             manaUsed += m['cost']
@@ -91,6 +100,7 @@ def fight(bossHP,bossD,playerHP,playerM,playerA,magic,manaUsed=0,spellsUsed="",s
         if playerHP <= 0:
             global finalSpellsUsed
             spellsUsed = 'FINAL -  PlayerHP: ' + str(playerHP) + ' BossHP: ' + str(bossHP) + ' Spells: ' + spellsUsed
+            print(spellsUsed)
             finalSpellsUsed.append(spellsUsed)
             return -1
         if bossHP <= 0:
