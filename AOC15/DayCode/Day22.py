@@ -56,37 +56,16 @@ def createGameData(inputs):
 
     return (boss,magic)
 
-def recursionTest(magic,playerM,file,nextSpell,depth=0,spellsUsed='',manaUsed=0):
-    m = magic[nextSpell]
-
-    canCast = False
-
-    if m['cost'] < playerM:
-        canCast = True
-
-    if canCast:
-        depth += 1
-        global magicShort
-        spellsUsed += magicShort[nextSpell] + ' -> '
-
-        playerM -= m['cost']
-        manaUsed += m['cost']
-
-        for mk in magic.keys():
-            recursionTest(magic,playerM,file,mk,depth,spellsUsed,manaUsed)
-    else:
-        file.write('Depth of '+str(depth)+' Spell: '+spellsUsed+ '\n')
-
-def fight(bossHP,bossD,playerHP,playerM,playerA,magic,nextSpell,file,manaUsed=0,spellsUsed='',shield=0,poison=0,recharge=0):
+def fight(bossHP,bossD,playerHP,playerM,magic,nextSpell,file,manaUsed=0,spellsUsed='',shield=0,poison=0,recharge=0):
     m = magic[nextSpell]
 
     # PLAYER TURN
 
+    playerA = 0
+
     if shield > 0:
         playerA = magic['Shield']['ARM']
         shield -= 1
-    else:
-        playerA = 0
 
     if poison > 0:
         bossHP -= magic['Poison']['DAM']
@@ -142,7 +121,7 @@ def fight(bossHP,bossD,playerHP,playerM,playerA,magic,nextSpell,file,manaUsed=0,
         return
     if bossHP <= 0:
         global finalSpellsUsed
-        spellsUsed = 'FINAL -  PlayerHP: ' + str(playerHP) + '\tBossHP: ' + str(bossHP) + '\tManaUsed: ' + str(manaUsed) + '\tSpells: ' + spellsUsed
+        spellsUsed = 'FINAL -  PlayerHP: ' + str(playerHP) + '\tBossHP: ' + str(bossHP) + '\tManaUsed: ' + str(manaUsed) + '\tSpells: ' + spellsUsed[:-3]
         file.write(spellsUsed + '\n')
         if manaUsed < p1MinMana:
             p1MinMana = manaUsed
@@ -150,7 +129,7 @@ def fight(bossHP,bossD,playerHP,playerM,playerA,magic,nextSpell,file,manaUsed=0,
 
     for mk in magic.keys():
         if magic[mk]['cost'] < playerM and manaUsed < p1MinMana:
-            fight(bossHP,bossD,playerHP,playerM,playerA,magic,mk,file,manaUsed,spellsUsed,shield,poison,recharge)
+            fight(bossHP,bossD,playerHP,playerM,magic,mk,file,manaUsed,spellsUsed,shield,poison,recharge)
 
 def solvePuzzle1(fileLocation):
     inputs = loadInputs(fileLocation)
@@ -158,7 +137,7 @@ def solvePuzzle1(fileLocation):
     DATA = createGameData(inputs)
     boss = DATA[0]
     magic = DATA[1]
-    player = {'hp': 50,'mana': 500,'arm':0}
+    player = {'hp': 50,'mana': 500}
 
     #boss['hp'] = 10
 
@@ -167,16 +146,9 @@ def solvePuzzle1(fileLocation):
         os.remove(fileP)
     file = open(fileP, "a+")
     for mk in magic.keys():
-        fight(boss['hp'],boss['dam'],player['hp'],player['mana'],player['arm'],magic,mk,file)
+        fight(boss['hp'],boss['dam'],player['hp'],player['mana'],magic,mk,file)
     file.close()
 
-    # fileP = "output/d22/output_rectest.txt"
-    # os.remove(fileP)
-    # file = open(fileP, "a+")
-    # for mk in magic.keys():
-    #     recursionTest(magic,player['mana'],file,mk)
-    # file.close()
-    
     output = p1MinMana
 
     print "Day 22 Puzzle 1 Solution - " + str(output)
