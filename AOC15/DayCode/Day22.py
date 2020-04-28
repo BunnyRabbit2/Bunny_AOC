@@ -56,66 +56,101 @@ def createGameData(inputs):
 
     return (boss,magic)
 
-def fight(bossHP,bossD,playerHP,playerM,playerA,magic,manaUsed=0,spellsUsed="",shield=0,poison=0,recharge=0):
+def recursionTest(magic,playerM,file,nextSpell,depth=0,spellsUsed='',manaUsed=0):
+    m = magic[nextSpell]
+
+    canCast = False
+
+    if m['cost'] < playerM:
+        canCast = True
+
+    if canCast:
+        depth += 1
+        global magicShort
+        spellsUsed += magicShort[nextSpell] + ' -> '
+
+        playerM -= m['cost']
+        manaUsed += m['cost']
+
+        for mk in magic.keys():
+            recursionTest(magic,playerM,file,mk,depth,spellsUsed,manaUsed)
+    else:
+        file.write('Depth of '+str(depth)+' Spell: '+spellsUsed+ '\n')
+
+def fight(bossHP,bossD,playerHP,playerM,playerA,magic,nextSpell,file,manaUsed=0,spellsUsed='',shield=0,poison=0,recharge=0):
+    m = magic[nextSpell]
+
+    # PLAYER TURN
+
+    if shield > 0:
+        playerA = magic['Shield']['ARM']
+        shield -= 1
+    else:
+        playerA = 0
+
+    if poison > 0:
+        bossHP -= magic['Poison']['DAM']
+        poison -= 1
+    
+    if recharge > 0:
+        playerM += magic['Recharge']['MANA']
+        recharge -= 1
+
+    global magicShort
+    spellsUsed += magicShort[nextSpell] + ' -> '
+
+    playerM -= m['cost']
+    manaUsed += m['cost']
+
+    if 'EFFECT' in m:
+        if 'DAM' in m and poison <= 0:
+            poison = m['EFFECT']
+        elif 'ARM' in m and shield <= 0:
+            shield = m['EFFECT']
+        elif 'MANA' in m and recharge <= 0:
+            recharge = m['EFFECT']
+    else:
+        if 'DAM' in m:
+            bossHP -= m['DAM']
+        if 'HEAL' in m:
+            playerHP += m['HEAL']
+
+    # BOSS TURN
+
+    if shield > 0:
+        playerA = magic['Shield']['ARM']
+        shield -= 1
+    else:
+        playerA = 0
+
+    if poison > 0:
+        bossHP -= magic['Poison']['DAM']
+        poison -= 1
+    
+    if recharge > 0:
+        playerM += magic['Recharge']['MANA']
+        recharge -= 1
+
+    playerHP -= bossD - playerA
+
+    global p1MinMana
+
+    if playerHP <= 0:
+        #global finalSpellsUsed
+        #spellsUsed = 'FINAL -  PlayerHP: ' + str(playerHP) + ' BossHP: ' + str(bossHP) + ' Spells: ' + spellsUsed
+        #file.write(spellsUsed + '\n')
+        return
+    if bossHP <= 0:
+        global finalSpellsUsed
+        spellsUsed = 'FINAL -  PlayerHP: ' + str(playerHP) + '\tBossHP: ' + str(bossHP) + '\tManaUsed: ' + str(manaUsed) + '\tSpells: ' + spellsUsed
+        file.write(spellsUsed + '\n')
+        if manaUsed < p1MinMana:
+            p1MinMana = manaUsed
+        return
+
     for mk in magic.keys():
-        m = magic[mk]
-
-        if mk == 'Drain':
-            v = 0
-
-        canCast = False
-
-        if m['cost'] < playerM:
-            canCast = True
-
-        if shield > 0:
-            playerA = magic['Shield']['ARM']
-            shield -= 1
-        else:
-            playerA = 0
-
-        if poison > 0:
-            bossHP -= magic['Poison']['DAM']
-            poison -= 1
-        
-        if recharge > 0:
-            playerM += magic['Recharge']['MANA']
-
-        if canCast:
-            global magicShort
-            spellsUsed += magicShort[mk] + ' -> '
-
-            playerM -= m['cost']
-            manaUsed += m['cost']
-
-            if 'EFFECT' in m:
-                if 'DAM' in m:
-                    poison = m['EFFECT']
-                elif 'ARM' in m:
-                    shield = m['EFFECT']
-                elif 'MANA' in m:
-                    recharge = m['EFFECT']
-            else:
-                if 'DAM' in m:
-                    bossHP -= m['DAM']
-                if 'HEAL' in m:
-                    playerHP += m['HEAL']
-
-        playerHP -= bossD - playerA
-
-        if playerHP <= 0:
-            global finalSpellsUsed
-            spellsUsed = 'FINAL -  PlayerHP: ' + str(playerHP) + ' BossHP: ' + str(bossHP) + ' Spells: ' + spellsUsed
-            print(spellsUsed)
-            finalSpellsUsed.append(spellsUsed)
-            return -1
-        if bossHP <= 0:
-            return manaUsed
-            global p1MinMana
-            if manaUsed < p1MinMana:
-                p1MinMana = manaUsed
-
-        fight(bossHP,bossD,playerHP,playerM,playerA,magic,manaUsed,spellsUsed,shield,poison,recharge)
+        if magic[mk]['cost'] < playerM and manaUsed < p1MinMana:
+            fight(bossHP,bossD,playerHP,playerM,playerA,magic,mk,file,manaUsed,spellsUsed,shield,poison,recharge)
 
 def solvePuzzle1(fileLocation):
     inputs = loadInputs(fileLocation)
@@ -125,7 +160,22 @@ def solvePuzzle1(fileLocation):
     magic = DATA[1]
     player = {'hp': 50,'mana': 500,'arm':0}
 
-    fight(boss['hp'],boss['dam'],player['hp'],player['mana'],player['arm'],magic)
+    #boss['hp'] = 10
+
+    fileP = 'output/d22/output_fight.txt'
+    if os.path.exists(fileP):
+        os.remove(fileP)
+    file = open(fileP, "a+")
+    for mk in magic.keys():
+        fight(boss['hp'],boss['dam'],player['hp'],player['mana'],player['arm'],magic,mk,file)
+    file.close()
+
+    # fileP = "output/d22/output_rectest.txt"
+    # os.remove(fileP)
+    # file = open(fileP, "a+")
+    # for mk in magic.keys():
+    #     recursionTest(magic,player['mana'],file,mk)
+    # file.close()
     
     output = p1MinMana
 
