@@ -1,4 +1,10 @@
-import os
+import os, errno
+
+try:
+    os.makedirs("output/d18/")
+except OSError as e:
+    if e.errno != errno.EEXIST:
+        raise
 
 def solve():
     fileLoc = "inputs/day18.txt"
@@ -95,7 +101,7 @@ def printGrid(grid, fileSuf = ""):
         line += '\n'
         lines.append(line)
     file = open("output/d18/output" + fileSuf + ".txt", "w+")
-    file.writelines(lines)        
+    file.writelines(lines)
 
 def solvePuzzle1(fileLocation):
     inputs = loadInputs(fileLocation)

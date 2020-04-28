@@ -1,5 +1,11 @@
-import os
+import os, errno
 import itertools
+
+try:
+    os.makedirs("output/d21/")
+except OSError as e:
+    if e.errno != errno.EEXIST:
+        raise
 
 def solve():
     fileLoc = "inputs/day21.txt"

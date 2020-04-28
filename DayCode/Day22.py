@@ -1,5 +1,11 @@
-import os
+import os, errno
 from sys import maxsize
+
+try:
+    os.makedirs("output/d22/")
+except OSError as e:
+    if e.errno != errno.EEXIST:
+        raise
 
 p1MinMana = maxsize
 finalSpellsUsed = []
