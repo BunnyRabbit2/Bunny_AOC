@@ -34,8 +34,8 @@ def createInstructionList(inputs):
         instructions.append(newInstruction)
     return instructions
 
-def runInstructions(instructions):
-    regA, regB = 0,0
+def runInstructions(instructions,startingRegs=(0,0)):
+    regA, regB = startingRegs[0],startingRegs[1]
     nextI = 0
 
     while nextI < len(instructions):
@@ -92,8 +92,10 @@ def solvePuzzle1(fileLocation):
     print "Day 23 Puzzle 1 Solution - " + str(output[1])
 
 def solvePuzzle2(fileLocation):
-    # inputs = loadInputs(fileLocation)
+    inputs = loadInputs(fileLocation)
 
-    output = 0
+    instructions = createInstructionList(inputs)
 
-    print "Day 23 Puzzle 2 Solution - " + str(output)
+    output = runInstructions(instructions,(1,0))
+
+    print "Day 23 Puzzle 2 Solution - " + str(output[1])
