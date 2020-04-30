@@ -56,10 +56,15 @@ def createGameData(inputs):
 
     return (boss,magic)
 
-def fight(bossHP,bossD,playerHP,playerM,magic,nextSpell,file,manaUsed=0,spellsUsed='',shield=0,poison=0,recharge=0):
+def fight(bossHP,bossD,playerHP,playerM,magic,nextSpell,file,manaUsed=0,spellsUsed='',shield=0,poison=0,recharge=0,hardMode=False):
     m = magic[nextSpell]
 
     # PLAYER TURN
+
+    if hardMode:
+        playerHP -= 1
+        if playerHP <= 0:
+            return
 
     playerA = 0
 
@@ -115,9 +120,6 @@ def fight(bossHP,bossD,playerHP,playerM,magic,nextSpell,file,manaUsed=0,spellsUs
     global p1MinMana
 
     if playerHP <= 0:
-        #global finalSpellsUsed
-        #spellsUsed = 'FINAL -  PlayerHP: ' + str(playerHP) + ' BossHP: ' + str(bossHP) + ' Spells: ' + spellsUsed
-        #file.write(spellsUsed + '\n')
         return
     if bossHP <= 0:
         global finalSpellsUsed
@@ -129,7 +131,7 @@ def fight(bossHP,bossD,playerHP,playerM,magic,nextSpell,file,manaUsed=0,spellsUs
 
     for mk in magic.keys():
         if magic[mk]['cost'] < playerM and manaUsed < p1MinMana:
-            fight(bossHP,bossD,playerHP,playerM,magic,mk,file,manaUsed,spellsUsed,shield,poison,recharge)
+            fight(bossHP,bossD,playerHP,playerM,magic,mk,file,manaUsed,spellsUsed,shield,poison,recharge,hardMode)
 
 def solvePuzzle1(fileLocation):
     inputs = loadInputs(fileLocation)
@@ -164,7 +166,25 @@ def solvePuzzle2(fileLocation):
 
     DATA = createGameData(inputs)
     boss = DATA[0]
+    magic = DATA[1]
+    player = {'hp': 50,'mana': 500}
 
-    output = 0
+    #boss['hp'] = 10
+
+    fileP = 'output/d22/output_fightp2.txt'
+    if os.path.exists(fileP):
+        os.remove(fileP)
+    file = open(fileP, "a+")
+    for mk in magic.keys():
+        fight(boss['hp'],boss['dam'],player['hp'],player['mana'],magic,mk,file,hardMode=True)
+    file.close()
+
+    output = p1MinMana
 
     print "Day 22 Puzzle 2 Solution - " + str(output)
+    global finalSpellsUsed
+    
+    file = open("output/d22/outputp2.txt", "w+")
+    for r in finalSpellsUsed:
+        file.write(r + '\n')
+    file.close()
