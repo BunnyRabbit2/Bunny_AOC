@@ -8,6 +8,7 @@ except OSError as e:
         raise
 
 p1MinMana = maxsize
+p2MinMana = maxsize
 finalSpellsUsed = []
 magicShort = {
     "Magic_Missile":"MM",
