@@ -76,7 +76,8 @@ def createGameData(inputs):
 def fight(boss,player):
     roundN = 0
     fileP = "output/d21/output.txt"
-    os.remove(fileP)
+    if os.path.exists(fileP):
+        os.remove(fileP)
     file = open(fileP, "a+")
 
     while boss['hp'] >= 0 and player['hp'] >= 0:
