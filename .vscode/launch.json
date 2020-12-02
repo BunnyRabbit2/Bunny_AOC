@@ -12,6 +12,13 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "Python AOC16: main.py int",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/AOC16/main.py",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
@@ -24,6 +31,14 @@
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
             "console": "externalTerminal"
+        },
+        {
+            "name": "Python: GenAocStruct",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args" : ["16"]
         }
     ]
 }
