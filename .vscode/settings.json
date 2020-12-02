@@ -5,5 +5,7 @@
         "*.code-workspace":true
     },
     "git.ignoreLimitWarning": true,
-    "python.pythonPath": "C:\\Python27\\python.exe"
+    "python.pythonPath": "C:\\Python27\\python.exe",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }
