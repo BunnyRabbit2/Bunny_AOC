@@ -27,6 +27,7 @@ def solvePuzzle1(fileLocation):
         return
 
     output = 0
+    breakLoop = False
 
     for i in range(len(inputs)):
         for j in range(len(inputs)):
@@ -38,6 +39,11 @@ def solvePuzzle1(fileLocation):
 
             if a + b == 2020:
                 output = a * b
+                breakLoop = True
+                break
+
+        if breakLoop:
+            break
 
     print "Day 01 Puzzle 1 Solution - " + str(output)
 
@@ -47,6 +53,27 @@ def solvePuzzle2(fileLocation):
         return
 
     output = 0
+    breakLoop = False
+
+    for i in range(len(inputs)):
+        for j in range(len(inputs)):
+            for k in range(len(inputs)):
+                if i == j or i == k or j == k:
+                    continue
+
+                a = inputs[i]
+                b = inputs[j]
+                c = inputs[k]
+
+                if a + b + c == 2020:
+                    output = a * b * c
+                    breakLoop = True
+                    break
+
+            if breakLoop:
+                break
+        if breakLoop:
+            break
 
     print "Day 01 Puzzle 2 Solution - " + str(output)
     
