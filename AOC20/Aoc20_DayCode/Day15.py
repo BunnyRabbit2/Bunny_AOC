@@ -9,7 +9,7 @@ def loadInputs(fileLocation):
     if os.path.exists(fileLocation):
         file = open(fileLocation)
         f = file.readline().strip()
-        if not f == 'AOC20_INPUT_DAY01':
+        if not f == 'AOC20_INPUT_DAY15':
             print "Invalid input file header: Day15"
             return False
      
