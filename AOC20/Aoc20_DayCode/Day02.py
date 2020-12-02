@@ -39,6 +39,12 @@ def solvePuzzle2(fileLocation):
 
     output = 0
 
+    pwds = workInputs(inputs)
+
+    for p in pwds:
+        if isValidPart2(p):
+            output += 1
+
     print "Day 02 Puzzle 2 Solution - " + str(output)
     
 def workInputs(inputs):
@@ -46,11 +52,11 @@ def workInputs(inputs):
 
     for i in inputs:
         s = i.split(':')
-        pwd = s[1].strip()
-        c = s[0].split()[1]
-        rng = s[0].split()[0]
-        low = rng.split('-')[0]
-        hi = rng.split('-')[1]
+        pwd = s[1].strip() # The password
+        c = s[0].split()[1] # The character to check
+        rng = s[0].split()[0] # The valid range
+        low = rng.split('-')[0] # The low end of the range
+        hi = rng.split('-')[1] # The high end of the range
 
         outputs.append((int(low),int(hi),c,pwd))
 
@@ -60,6 +66,15 @@ def isValidPart1(pwd):
     c = pwd[3].count(pwd[2])
 
     if c >= pwd[0] and c <= pwd[1]:
+        return True
+    else:
+        return False
+
+def isValidPart2(pwd):
+    fP = pwd[3][pwd[0] - 1] # First char
+    sP = pwd[3][pwd[1] - 1] # Second char
+
+    if (fP == pwd[2]) ^ (sP == pwd[2]):
         return True
     else:
         return False
