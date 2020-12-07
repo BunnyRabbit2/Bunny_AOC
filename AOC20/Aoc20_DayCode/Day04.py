@@ -24,6 +24,12 @@ def solvePuzzle1(fileLocation):
 
     output = 0
 
+    passports = processPassports(inputs)
+
+    for p in passports:
+        if isPassportValid(p):
+            output += 1
+
     print "Day 04 Puzzle 1 Solution - " + str(output)
 
 def solvePuzzle2(fileLocation):
@@ -35,3 +41,27 @@ def solvePuzzle2(fileLocation):
 
     print "Day 04 Puzzle 2 Solution - " + str(output)
     
+def processPassports(pIn):
+    passports = []
+
+    pspts = pIn.split('\n\n')
+
+    for p in pspts:
+        newP = {}
+
+        pS = p.replace('\n',' ') # Standardised string
+        pL = pS.split() # String as a list
+
+        for i in pL:
+            items = i.split(':')
+            newP[items[0]] = items[1]
+
+        passports.append(newP)
+
+    return passports
+
+def isPassportValid(pspt):
+    if 'byr' in pspt and 'iyr' in pspt and 'eyr' in pspt and 'hgt' in pspt and 'hcl' in pspt and 'ecl' in pspt and 'pid' in pspt:
+        return True
+    else:
+        return False
