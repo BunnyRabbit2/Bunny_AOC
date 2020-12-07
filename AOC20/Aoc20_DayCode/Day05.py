@@ -22,12 +22,9 @@ def solvePuzzle1(fileLocation):
     if inputs == '':
         return
 
-    output = 0
-
     passes = processPasses(inputs)
 
-    for p in passes:
-        output = max(getSeatID(p),output)
+    output = getMaxID(passes)
 
     print "Day 05 Puzzle 1 Solution - " + str(output)
 
@@ -37,6 +34,10 @@ def solvePuzzle2(fileLocation):
         return
 
     output = 0
+
+    passes = processPasses(inputs)
+
+    output = findSeat(passes)
 
     print "Day 05 Puzzle 2 Solution - " + str(output)
 
@@ -59,11 +60,27 @@ def processPasses(passes):
     
     return pOut
     
-def getSeatID(bPass):
-    row = getPosition(bPass[0], 128)
-    seat = getPosition(bPass[1], 8)
+def getSeatID(pos):
+    return pos[0] * 8 + pos[1]
 
-    return row * 8 + seat
+def getSeatPos(bPass):
+    return (getPosition(bPass[0], 128),getPosition(bPass[1], 8))
+
+def getMaxID(passes):
+    output = 0
+
+    for p in passes:
+        output = max(getSeatID(getSeatPos(p)),output)
+
+    return output
+
+def getMinID(passes):
+    output = 128 * 8 + 8
+
+    for p in passes:
+        output = min(getSeatID(getSeatPos(p)),output)
+
+    return output
 
 def getPosition(finder, setSize):
     s = range(setSize)
@@ -78,3 +95,23 @@ def getPosition(finder, setSize):
             return s[0]
 
     return 0
+
+def findSeat(passes):
+    seatIDs = set()
+
+    minID = getMinID(passes)
+    maxID = getMaxID(passes)
+
+    # Create a set of valid seat IDs to check against
+    for i in range(128):
+        for j in range(8):
+            newID = getSeatID( (i,j) )
+            if newID <= maxID and newID >= minID:
+                seatIDs.add(newID)
+
+    # Remove every seat ID we have a pass for
+    for p in passes:
+        seatIDs.remove(getSeatID(getSeatPos(p)))
+
+    # There should only be one element left in the set, the seat we need
+    return seatIDs.pop()
