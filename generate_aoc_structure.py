@@ -200,7 +200,7 @@ def create_day_code():
     create_init_py()
 
     for i in range(1, 26):
-        f = open(f'day{i:02}.py', 'w+')
+        f = open(f'day_{i:02}.py', 'w+')
         day_code_str = f'''import os
 
 def solve():
