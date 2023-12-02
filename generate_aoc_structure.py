@@ -227,7 +227,7 @@ def solve_puzzle_1(file_location: str):
 
     output = 0
 
-    print("Day {i:02} Puzzle 1 Solution - " + str(output))
+    print(f'Day {i:02} Puzzle 1 Solution - {{output}}')
 
 def solve_puzzle_2(file_location: str):
     inputs = load_inputs(file_location)
@@ -236,7 +236,7 @@ def solve_puzzle_2(file_location: str):
 
     output = 0
 
-    print("Day({i:02} Puzzle 2 Solution - " + str(output))
+    print(f'Day_{i:02} Puzzle 2 Solution - {{output}}')
     '''
         f.write(day_code_str)
         f.close()
