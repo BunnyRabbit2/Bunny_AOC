@@ -19,6 +19,13 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "Python AOC23: main.py int",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/AOC23/main.py",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
