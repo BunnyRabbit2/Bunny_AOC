@@ -1,12 +1,12 @@
-from Aoc16_DayCode import Day01
-import Aoc16_SolveAll
+from aoc_16_day_code import day_02
+import aoc_16_solve_all
 import os
 
 def main():
-    print "Starting Advent of Code 2016 program - Python 2.7 Version"
+    print("Starting Advent of Code 2016 program - Python 3 Version")
     os.chdir('AOC16')
-    Day01.solve()
-    # SolveAll.SolveAll()
+    day_02.solve()
+    # solve_all.solve_all()
 
 if __name__ == "__main__":
     main()
