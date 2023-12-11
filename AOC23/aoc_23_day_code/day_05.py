@@ -20,6 +20,7 @@ def load_inputs(file_location: str):
 def gen_almanac(input_sets: list[str]):
     almanac = {
         'seed_numbers': [],
+        'seed_ranges': [],
         'run_order': [
             'seed-to-soil',
             'soil-to-fertilizer',
@@ -42,7 +43,13 @@ def gen_almanac(input_sets: list[str]):
         if almanac_set.startswith('seeds'):
             seed_numbers = almanac_set.split(':')[-1].split()
             seed_numbers = [int(seed_num) for seed_num in seed_numbers]
+
             almanac['seed_numbers'] = seed_numbers
+
+            seed_num_starts = [int(seed_num) for x, seed_num in enumerate(seed_numbers) if x % 2 == 0]
+            seed_num_ranges = [int(seed_num) for x, seed_num in enumerate(seed_numbers) if x % 2 == 1]
+
+            almanac['seed_ranges'] = [(range_start, seed_num_ranges[x]) for x, range_start in enumerate(seed_num_starts)]
         else:
             set_split = almanac_set.split(':\n')
             almanac_name = set_split[0].split()[0]
@@ -96,7 +103,18 @@ def solve_puzzle_2(file_location: str):
     if inputs == '':
         return
 
-    output = 0
+    input_sets = inputs.split('\n\n')
+
+    almanac = gen_almanac(input_sets)
+
+    seed_locations = []
+
+    for seed_range in almanac['seed_ranges']:
+        seed_start = seed_range[0]
+        for i in range(seed_range[1]):
+            seed_locations.append(run_seed_number(seed_start + i, almanac))
+
+    output = min(seed_locations)
 
     print(f'Day_05 Puzzle 2 Solution - {output}')
     
