@@ -79,4 +79,5 @@ dmypy.json
 bash.exe.stackdump
 lights.png
 /output/*
-    
+
+private
