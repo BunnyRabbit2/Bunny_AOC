@@ -1,0 +1,50 @@
+Day 01 Puzzle 1 Solution - 74
+Day 01 Puzzle 2 Solution - 1795
+Day 02 Puzzle 1 Solution - 1598415
+Day 02 Puzzle 2 Solution - 3812909
+Day 03 Puzzle 1 Solution - 2592
+Day 03 Puzzle 2 Solution - 2360
+Day 04 Puzzle 1 Solution - 254575
+Day 04 Puzzle 2 Solution - 1038736
+Day 05 Puzzle 1 Solution - 84
+Day 05 Puzzle 2 Solution - 53
+Day 06 Puzzle 1 Solution - 543903
+Day 06 Puzzle 2 Solution - 14687245
+Day 07 Puzzle 1 Solution - 65535
+Day 07 Puzzle 2 Solution - 0
+Day 08 Puzzle 1 Solution - 1350
+Day 08 Puzzle 2 Solution - 2085
+Day 09 Puzzle 1 Solution - 251
+Day 09 Puzzle 2 Solution - 898
+Day 10 Puzzle 1 Solution - 492982
+Day 10 Puzzle 2 Solution - 6989950
+Day 11 Puzzle 1 Solution - cqjxxyzz
+Day 11 Puzzle 2 Solution - cqkaabcc
+Day 12 Puzzle 1 Solution - 191164
+Day 12 Puzzle 2 Solution - 87842
+Day 13 Puzzle 1 Solution - 733
+Day 13 Puzzle 2 Solution - 725
+Day 14 Puzzle 1 Solution - 2660
+Day 14 Puzzle 2 Solution - 1256
+Day 15 Puzzle 1 Solution - 21367368
+Day 15 Puzzle 2 Solution - 1766400
+Day 16 Puzzle 1 Solution - 103
+Day 16 Puzzle 2 Solution - 405
+Day 17 Puzzle 1 Solution - 1304
+Day 17 Puzzle 2 Solution - 18
+Completed 0.0% stepsCompleted 1.0% stepsCompleted 2.0% stepsCompleted 3.0% stepsCompleted 4.0% stepsCompleted 5.0% stepsCompleted 6.0% stepsCompleted 7.0% stepsCompleted 8.0% stepsCompleted 9.0% stepsCompleted 10.0% stepsCompleted 11.0% stepsCompleted 12.0% stepsCompleted 13.0% stepsCompleted 14.0% stepsCompleted 15.0% stepsCompleted 16.0% stepsCompleted 17.0% stepsCompleted 18.0% stepsCompleted 19.0% stepsCompleted 20.0% stepsCompleted 21.0% stepsCompleted 22.0% stepsCompleted 23.0% stepsCompleted 24.0% stepsCompleted 25.0% stepsCompleted 26.0% stepsCompleted 27.0% stepsCompleted 28.0% stepsCompleted 29.0% stepsCompleted 30.0% stepsCompleted 31.0% stepsCompleted 32.0% stepsCompleted 33.0% stepsCompleted 34.0% stepsCompleted 35.0% stepsCompleted 36.0% stepsCompleted 37.0% stepsCompleted 38.0% stepsCompleted 39.0% stepsCompleted 40.0% stepsCompleted 41.0% stepsCompleted 42.0% stepsCompleted 43.0% stepsCompleted 44.0% stepsCompleted 45.0% stepsCompleted 46.0% stepsCompleted 47.0% stepsCompleted 48.0% stepsCompleted 49.0% stepsCompleted 50.0% stepsCompleted 51.0% stepsCompleted 52.0% stepsCompleted 53.0% stepsCompleted 54.0% stepsCompleted 55.0% stepsCompleted 56.0% stepsCompleted 57.0% stepsCompleted 58.0% stepsCompleted 59.0% stepsCompleted 60.0% stepsCompleted 61.0% stepsCompleted 62.0% stepsCompleted 63.0% stepsCompleted 64.0% stepsCompleted 65.0% stepsCompleted 66.0% stepsCompleted 67.0% stepsCompleted 68.0% stepsCompleted 69.0% stepsCompleted 70.0% stepsCompleted 71.0% stepsCompleted 72.0% stepsCompleted 73.0% stepsCompleted 74.0% stepsCompleted 75.0% stepsCompleted 76.0% stepsCompleted 77.0% stepsCompleted 78.0% stepsCompleted 79.0% stepsCompleted 80.0% stepsCompleted 81.0% stepsCompleted 82.0% stepsCompleted 83.0% stepsCompleted 84.0% stepsCompleted 85.0% stepsCompleted 86.0% stepsCompleted 87.0% stepsCompleted 88.0% stepsCompleted 89.0% stepsCompleted 90.0% stepsCompleted 91.0% stepsCompleted 92.0% stepsCompleted 93.0% stepsCompleted 94.0% stepsCompleted 95.0% stepsCompleted 96.0% stepsCompleted 97.0% stepsCompleted 98.0% stepsCompleted 99.0% stepsDay 18 Puzzle 1 Solution - 821
+Completed 0.0% stepsCompleted 1.0% stepsCompleted 2.0% stepsCompleted 3.0% stepsCompleted 4.0% stepsCompleted 5.0% stepsCompleted 6.0% stepsCompleted 7.0% stepsCompleted 8.0% stepsCompleted 9.0% stepsCompleted 10.0% stepsCompleted 11.0% stepsCompleted 12.0% stepsCompleted 13.0% stepsCompleted 14.0% stepsCompleted 15.0% stepsCompleted 16.0% stepsCompleted 17.0% stepsCompleted 18.0% stepsCompleted 19.0% stepsCompleted 20.0% stepsCompleted 21.0% stepsCompleted 22.0% stepsCompleted 23.0% stepsCompleted 24.0% stepsCompleted 25.0% stepsCompleted 26.0% stepsCompleted 27.0% stepsCompleted 28.0% stepsCompleted 29.0% stepsCompleted 30.0% stepsCompleted 31.0% stepsCompleted 32.0% stepsCompleted 33.0% stepsCompleted 34.0% stepsCompleted 35.0% stepsCompleted 36.0% stepsCompleted 37.0% stepsCompleted 38.0% stepsCompleted 39.0% stepsCompleted 40.0% stepsCompleted 41.0% stepsCompleted 42.0% stepsCompleted 43.0% stepsCompleted 44.0% stepsCompleted 45.0% stepsCompleted 46.0% stepsCompleted 47.0% stepsCompleted 48.0% stepsCompleted 49.0% stepsCompleted 50.0% stepsCompleted 51.0% stepsCompleted 52.0% stepsCompleted 53.0% stepsCompleted 54.0% stepsCompleted 55.0% stepsCompleted 56.0% stepsCompleted 57.0% stepsCompleted 58.0% stepsCompleted 59.0% stepsCompleted 60.0% stepsCompleted 61.0% stepsCompleted 62.0% stepsCompleted 63.0% stepsCompleted 64.0% stepsCompleted 65.0% stepsCompleted 66.0% stepsCompleted 67.0% stepsCompleted 68.0% stepsCompleted 69.0% stepsCompleted 70.0% stepsCompleted 71.0% stepsCompleted 72.0% stepsCompleted 73.0% stepsCompleted 74.0% stepsCompleted 75.0% stepsCompleted 76.0% stepsCompleted 77.0% stepsCompleted 78.0% stepsCompleted 79.0% stepsCompleted 80.0% stepsCompleted 81.0% stepsCompleted 82.0% stepsCompleted 83.0% stepsCompleted 84.0% stepsCompleted 85.0% stepsCompleted 86.0% stepsCompleted 87.0% stepsCompleted 88.0% stepsCompleted 89.0% stepsCompleted 90.0% stepsCompleted 91.0% stepsCompleted 92.0% stepsCompleted 93.0% stepsCompleted 94.0% stepsCompleted 95.0% stepsCompleted 96.0% stepsCompleted 97.0% stepsCompleted 98.0% stepsCompleted 99.0% stepsDay 18 Puzzle 2 Solution - 865
+Day 19 Puzzle 1 Solution - 0
+Day 19 Puzzle 2 Solution - 0
+Day 20 Puzzle 1 Solution - 776160
+Day 20 Puzzle 2 Solution - 786240
+Day 21 Puzzle 1 Solution - 400
+Day 21 Puzzle 2 Solution - 0
+Day 22 Puzzle 1 Solution - 9223372036854775807
+Day 22 Puzzle 2 Solution - 9223372036854775807
+Day 23 Puzzle 1 Solution - 184
+Day 23 Puzzle 2 Solution - 231
+Day 24 Puzzle 1 Solution - 10439961859
+Day 24 Puzzle 2 Solution - 72050269
+Day 25 Puzzle 1 Solution - 19980801
+Day 25 Puzzle 2 Solution - 0

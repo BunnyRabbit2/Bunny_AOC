@@ -1,0 +1,13 @@
+AOC15_INPUT_DAY22
+BOSS START
+Hit Points: 51
+Damage: 9
+END
+
+MAGIC START
+Magic_Missile   53      DAM->4
+Drain           73      DAM->2  HEAL->2
+Shield          113     EFFECT->6   ARM->7
+Poison          173     EFFECT->6   DAM->3
+Recharge        229     EFFECT->5   MANA->101
+END
