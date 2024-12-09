@@ -15,14 +15,63 @@
             "name": "Python AOC16: main.py int",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/AOC16/main.py",
+            "program": "${workspaceFolder}/aoc_16/main.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python AOC17: main.py int",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/aoc_17/main.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python AOC18: main.py int",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/aoc_18/main.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python AOC19: main.py int",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/aoc_19/main.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python AOC20: main.py int",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/aoc_20/main.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python AOC21: main.py int",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/aoc_21/main.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python AOC22: main.py int",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/aoc_22/main.py",
             "console": "integratedTerminal"
         },
         {
             "name": "Python AOC23: main.py int",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/AOC23/main.py",
+            "program": "${workspaceFolder}/aoc_23/main.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python AOC24: main.py int",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/aoc_24/main.py",
             "console": "integratedTerminal"
         },
         {
