@@ -20,6 +20,18 @@ def load_inputs(file_location):
     else:
         print("Day 06 input file does not exist")
         return ''
+    
+def create_letter_counts(word_list):
+    letter_count = [{} for c in word_list[0]]
+
+    for w in word_list:
+        for x,c in enumerate(w):
+            if c in letter_count[x]:
+                letter_count[x][c] += 1
+            else:
+                letter_count[x][c] = 1
+
+    return [sorted(letter_count[i].items(), key = lambda x: x[1]) for i in range(len(letter_count))]
 
 def solve_puzzle_1(file_location):
     """Solves puzzle 1 for the day"""
@@ -27,7 +39,13 @@ def solve_puzzle_1(file_location):
     if inputs == '':
         print("Day 06 Puzzle 1 - NO INPUTS")
     else:
-        output = 0
+        error_words = inputs.split('\n')
+
+        sorted_counts = create_letter_counts(error_words)
+
+        final_word = ''.join([sorted_counts[i][-1][0] for i in range(len(sorted_counts))])
+
+        output = final_word
 
         print("Day 06 Puzzle 1 Solution - " + str(output))
 
@@ -37,7 +55,13 @@ def solve_puzzle_2(file_location):
     if inputs == '':
         print("Day 06 Puzzle 2 - NO INPUTS")
     else:
-        output = 0
+        error_words = inputs.split('\n')
+
+        sorted_counts = create_letter_counts(error_words)
+
+        final_word = ''.join([sorted_counts[i][0][0] for i in range(len(sorted_counts))])
+
+        output = final_word
 
         print("Day 06 Puzzle 2 Solution - " + str(output))
     
