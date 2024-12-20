@@ -7,7 +7,7 @@ def main():
     """Main entry point for the solving file"""
     print("Starting Advent of Code 2016 program - Python 3 Version")
     os.chdir('aoc_16')
-    day_06.solve()
+    day_07.solve()
     # aoc_16_solve_all.solve_all()
 
 if __name__ == "__main__":
