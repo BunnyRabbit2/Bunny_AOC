@@ -45,24 +45,28 @@ def ip_has_tls(ip_string):
     return has_tls
 
 def ip_has_ssl(ip_string):
-    aba_match = re.compile(r'(\w)(?!\1)\w\1')
+    # aba_match = re.compile(r'(\w)(?!\1)\w\1')
+    aba_match = re.compile(r'(?=((.)(?!\2).\2))')
     hnet_grabber = re.compile(r'\[\w*\]')
 
     snet_seqs = hnet_grabber.sub(' ', ip_string).split()
     hnet_seqs = hnet_grabber.findall(ip_string)
 
-    snet_abas = [aba_match.search(i) for i in snet_seqs]
+    snet_abas = [aba_match.findall(i) for i in snet_seqs]
+    
+    abas = []
     babs = []
 
     for s in snet_abas:
         if s is None:
             continue
-        aba = s.group(0)
-        babs.append(aba[1] + aba[0] + aba[1])
+        for catch in s:
+            aba = catch[0]
+            abas.append(aba)
+            babs.append(aba[1] + aba[0] + aba[1])
+                
 
-    snet_has_aba = any(snet_abas)
-
-    if snet_has_aba:
+    if len(abas) > 0:
         hnet_has_bab = any([any([bab in h for bab in babs]) for h in hnet_seqs])
 
         return hnet_has_bab
