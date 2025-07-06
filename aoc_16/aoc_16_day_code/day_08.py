@@ -21,6 +21,37 @@ def load_inputs(file_location):
         print("Day 08 input file does not exist")
         return ''
     
+def add_lights(grid_in, a, b):
+    for xv in range(a):
+        for yv in range(b):
+            grid_in[yv][xv] = '#'
+
+    return grid_in
+
+def rotate_x(grid_in, a, b):
+    grid_out = [[x for x in y] for y in grid_in]
+
+    shift = b % 6
+
+    for bv in range(6):
+        grid_out[bv][a] = grid_in[bv - shift][a]
+
+    return grid_out
+
+def rotate_y(grid_in, a, b):
+    grid_out = [[x for x in y] for y in grid_in]
+
+    shift = b % 50
+
+    for bv in range(50):
+        grid_out[a][bv] = grid_in[a][bv - shift]
+
+    return grid_out
+
+def print_panel(grid_in):
+    for y in range(6):
+        print(' '.join(grid_in[y]))
+    
 def solve_puzzle_1(file_location):
     """Solves puzzle 1 for the day"""
     inputs = load_inputs(file_location)
@@ -37,18 +68,26 @@ def solve_puzzle_1(file_location):
             ins = l.split(' ')
 
             if ins[0] == 'rect':
-                xv, yv = [int(v) for v in ins[1].split('x')]
+                a, b = [int(v) for v in ins[1].split('x')]
 
-                for y in range(yv):
-                    for x in range(xv):
-                        light_panel[y][x] = '#'
+                light_panel = add_lights(light_panel, a, b)
             else:
-                move_num = int(ins[2].split('=')[-1])
-                if ins[1] == 'row':
-                    pass
+                a = int(ins[2].split('=')[-1])
+                b = int(ins[-1])
 
-        for y in light_panel:
-            print(''.join(y))
+                if ins[1] == 'row':
+                    light_panel = rotate_y(light_panel, a, b)
+                else:
+                    light_panel = rotate_x(light_panel, a, b)
+            
+            # print(''.join(['%02d'%i for i in range(50)]))
+            # print_panel(light_panel)
+            # print('')
+
+        
+        print_panel(light_panel)
+
+        output = sum([sum([1 for x in y if x == '#']) for y in light_panel])
 
         print("Day 08 Puzzle 1 Solution - " + str(output))
 
